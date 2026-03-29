@@ -1,555 +1,3 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Darwin Connolly-Bautista — Photographer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<style>
-  :root {
-    --black: #0a0a0a;
-    --white: #f5f3ee;
-    --pink: #f2629a;
-    --mid: #888;
-    --serif: 'Bebas Neue', sans-serif;
-    --mono: 'Space Mono', monospace;
-    --body: 'Barlow Condensed', sans-serif;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--white);
-    color: var(--black);
-    font-family: var(--body);
-    font-size: 16px;
-    line-height: 1.4;
-    overflow-x: hidden;
-    cursor: crosshair;
-  }
-
-  /* ─── NAV ─── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 20px 40px;
-    mix-blend-mode: multiply;
-  }
-
-  .nav-role {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--black);
-    padding-top: 4px;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--black);
-    text-decoration: none;
-    position: relative;
-  }
-
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px; left: 0; right: 0;
-    height: 1px;
-    background: var(--black);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
-  }
-
-  .nav-links a:hover::after { transform: scaleX(1); }
-
-  /* ─── HERO ─── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 40px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-name {
-    font-family: var(--serif);
-    font-size: clamp(90px, 14vw, 200px);
-    line-height: 0.88;
-    letter-spacing: -0.01em;
-    color: var(--black);
-    position: relative;
-    z-index: 2;
-    animation: slideUp 0.9s cubic-bezier(0.16,1,0.3,1) both;
-  }
-
-  .hero-name .line2 {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    animation-delay: 0.1s;
-  }
-
-  .hero-name .sig {
-    width: clamp(60px, 8vw, 110px);
-    height: auto;
-    opacity: 0.85;
-    transform: translateY(8px);
-  }
-
-  /* hand-drawn squiggle signature using SVG inline */
-  .sig-svg {
-    display: inline-block;
-    width: clamp(60px, 8vw, 110px);
-    transform: translateY(12px);
-  }
-
-  .hero-meta {
-    margin-top: 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    z-index: 2;
-    position: relative;
-    animation: fadeIn 1s ease 0.5s both;
-  }
-
-  .hero-tagline {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--mid);
-    max-width: 320px;
-    line-height: 1.7;
-  }
-
-  .hero-scroll {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--mid);
-    writing-mode: vertical-rl;
-    opacity: 0.5;
-    animation: pulse 2s ease infinite;
-  }
-
-  /* big decorative dash */
-  .hero-dash {
-    position: absolute;
-    top: 38%;
-    right: -40px;
-    font-family: var(--serif);
-    font-size: 42vw;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(0,0,0,0.04);
-    line-height: 1;
-    pointer-events: none;
-    z-index: 0;
-    user-select: none;
-  }
-
-  /* ─── DIVIDER ─── */
-  hr {
-    border: none;
-    border-top: 1px solid rgba(0,0,0,0.12);
-    margin: 0 40px;
-  }
-
-  /* ─── PROJECTS GRID ─── */
-  .projects {
-    padding: 80px 40px;
-  }
-
-  .section-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .section-label::after {
-    content: '';
-    display: block;
-    flex: 1;
-    height: 1px;
-    background: rgba(0,0,0,0.12);
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 2px;
-  }
-
-  .project-card {
-    position: relative;
-    overflow: hidden;
-    background: #ddd;
-    cursor: pointer;
-  }
-
-  /* varied grid spans to mimic Joseph's asymmetric layout */
-  .project-card:nth-child(1) { grid-column: span 7; aspect-ratio: 16/10; }
-  .project-card:nth-child(2) { grid-column: span 5; aspect-ratio: 4/5; }
-  .project-card:nth-child(3) { grid-column: span 4; aspect-ratio: 4/5; }
-  .project-card:nth-child(4) { grid-column: span 8; aspect-ratio: 16/10; }
-  .project-card:nth-child(5) { grid-column: span 6; aspect-ratio: 1/1; }
-  .project-card:nth-child(6) { grid-column: span 6; aspect-ratio: 1/1; }
-
-  .project-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), filter 0.4s ease;
-    filter: grayscale(20%);
-  }
-
-  /* placeholder for photos not yet added */
-  .project-placeholder {
-    width: 100%;
-    height: 100%;
-    min-height: 260px;
-    background: #e0ddd8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #aaa;
-    transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
-  }
-
-  .project-card:hover .project-img,
-  .project-card:hover .project-placeholder {
-    transform: scale(1.04);
-  }
-
-  .project-card:hover .project-img { filter: grayscale(0%); }
-
-  .project-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 55%);
-    opacity: 0;
-    transition: opacity 0.35s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 24px;
-  }
-
-  .project-card:hover .project-overlay { opacity: 1; }
-
-  .project-number {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 0.15em;
-    margin-bottom: 6px;
-  }
-
-  .project-title {
-    font-family: var(--serif);
-    font-size: clamp(22px, 3vw, 42px);
-    color: #fff;
-    line-height: 0.95;
-    letter-spacing: 0.01em;
-    margin-bottom: 8px;
-  }
-
-  .project-tags {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .tag {
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border: 1px solid rgba(255,255,255,0.3);
-    color: rgba(255,255,255,0.7);
-  }
-
-  .tag.pink { border-color: var(--pink); color: var(--pink); }
-
-  /* card label below (non-hover) */
-  .project-info {
-    padding: 14px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  .project-info-left .project-name {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 3px;
-  }
-
-  .project-info-left .project-type {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--mid);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .project-info-right {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--mid);
-    letter-spacing: 0.06em;
-    text-align: right;
-  }
-
-  /* ─── ABOUT / LET'S CHAT ─── */
-  .about {
-    padding: 80px 40px;
-    border-top: 1px solid rgba(0,0,0,0.12);
-  }
-
-  .about-heading {
-    font-family: var(--serif);
-    font-size: clamp(80px, 13vw, 180px);
-    line-height: 0.88;
-    letter-spacing: -0.01em;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    margin-bottom: 60px;
-  }
-
-  .about-heading span:nth-child(2) {
-    /* offset middle word for Joseph's broken layout feel */
-    padding-top: 0.1em;
-  }
-
-  .about-cols {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 60px;
-  }
-
-  .about-col h4 {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 18px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-  }
-
-  .about-col p {
-    font-family: var(--body);
-    font-weight: 300;
-    font-size: 15px;
-    line-height: 1.65;
-    color: var(--black);
-    margin-bottom: 12px;
-  }
-
-  .about-col a {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--black);
-    text-decoration: none;
-    font-weight: 700;
-    display: block;
-    margin-top: 20px;
-  }
-
-  .about-col a:hover { color: var(--pink); }
-
-  .exp-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .exp-list li {
-    font-family: var(--body);
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 1.5;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-  }
-
-  .exp-list li strong {
-    font-weight: 600;
-    display: block;
-    font-size: 13px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  .exp-list li span {
-    color: var(--mid);
-    font-size: 12px;
-  }
-
-  /* proud list */
-  .proud-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .proud-list li {
-    font-family: var(--body);
-    font-size: 14px;
-    font-weight: 300;
-    padding: 4px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .proud-list li .year {
-    color: var(--mid);
-    font-size: 12px;
-  }
-
-  /* ─── FOOTER ─── */
-  footer {
-    padding: 40px;
-    border-top: 1px solid rgba(0,0,0,0.12);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  footer .footer-name {
-    font-family: var(--serif);
-    font-size: 28px;
-    letter-spacing: 0.02em;
-  }
-
-  footer .footer-links {
-    display: flex;
-    gap: 28px;
-    list-style: none;
-  }
-
-  footer .footer-links a {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--mid);
-    text-decoration: none;
-  }
-
-  footer .footer-links a:hover { color: var(--black); }
-
-  footer .footer-copy {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--mid);
-    letter-spacing: 0.08em;
-  }
-
-  /* ─── PINK ACCENT BADGE ─── */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--pink);
-    color: #fff;
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    z-index: 3;
-  }
-
-  /* ─── ANIMATIONS ─── */
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(60px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.5; }
-    50%       { opacity: 1; }
-  }
-
-  /* stagger hero lines */
-  .hero-name .line1 { animation: slideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.05s both; }
-  .hero-name .line2 { animation: slideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.15s both; }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 900px) {
-    nav { padding: 16px 20px; }
-    .hero { padding: 0 20px 32px; }
-    hr, .projects, .about { padding-left: 20px; padding-right: 20px; }
-    .project-card:nth-child(1) { grid-column: span 12; }
-    .project-card:nth-child(2) { grid-column: span 12; }
-    .project-card:nth-child(3) { grid-column: span 6; }
-    .project-card:nth-child(4) { grid-column: span 6; }
-    .project-card:nth-child(5) { grid-column: span 12; }
-    .project-card:nth-child(6) { grid-column: span 12; }
-    .about-cols { grid-template-columns: 1fr; gap: 40px; }
-    .about-heading { font-size: clamp(52px, 14vw, 100px); grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 20px; text-align: center; }
-    footer .footer-links { flex-wrap: wrap; justify-content: center; }
-  }
-</style>
-</head>
 <body>
 
 <!-- NAV -->
@@ -558,7 +6,7 @@
   <ul class="nav-links">
     <li><a href="#projects">Work</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="mailto:darwin@email.com">Contact</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#ff9b9e8d889691bf9a929e9693d19c9092">Contact</a></li>
   </ul>
 </nav>
 
@@ -572,10 +20,10 @@
       CONNOLLY-BAUTISTA
       <!-- Hand-drawn style signature SVG -->
       <svg class="sig-svg" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M8 40 C18 20, 28 10, 38 22 C44 30, 40 45, 52 38 C60 33, 58 18, 68 15 C78 12, 82 28, 90 25 C98 22, 104 12, 112 18" stroke="#0a0a0a" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-        <path d="M20 52 C32 48, 50 55, 65 50 C78 46, 88 52, 100 48" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"/>
-        <path d="M14 30 Q22 24 26 34" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" fill="none"/>
-        <circle cx="108" cy="14" r="2" fill="#f2629a"/>
+        <path d="M8 40 C18 20, 28 10, 38 22 C44 30, 40 45, 52 38 C60 33, 58 18, 68 15 C78 12, 82 28, 90 25 C98 22, 104 12, 112 18" stroke="#0a0a0a" stroke-width="2.5" stroke-linecap="round" fill="none"></path>
+        <path d="M20 52 C32 48, 50 55, 65 50 C78 46, 88 52, 100 48" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.4"></path>
+        <path d="M14 30 Q22 24 26 34" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" fill="none"></path>
+        <circle cx="108" cy="14" r="2" fill="#f2629a"></circle>
       </svg>
     </div>
   </h1>
@@ -597,80 +45,80 @@
 
   <div class="grid">
 
-    <!-- Card 1 -->
+    <!-- Card 1 — Football / Shard -->
     <div class="project-card">
-      <div class="project-placeholder">Add photo here</div>
+      <img class="project-img" src="images/snapsave-app_3760269520640967694.jpg" alt="Sunday League, London">
       <div class="project-overlay">
         <div class="project-number">01.</div>
-        <div class="project-title">Portrait Series</div>
+        <div class="project-title">Sunday League</div>
         <div class="project-tags">
-          <span class="tag pink">Portrait</span>
-          <span class="tag">Editorial</span>
+          <span class="tag pink">Street</span>
+          <span class="tag">London</span>
         </div>
       </div>
     </div>
 
-    <!-- Card 2 -->
+    <!-- Card 2 — Fireworks crowd -->
     <div class="project-card">
-      <div class="project-placeholder">Add photo here</div>
+      <img class="project-img" src="images/snapsave-app_3757960759335230015.jpg" alt="Bonfire Night">
       <div class="project-overlay">
         <div class="project-number">02.</div>
-        <div class="project-title">Street Culture</div>
+        <div class="project-title">Bonfire Night</div>
         <div class="project-tags">
-          <span class="tag">Street</span>
+          <span class="tag">Events</span>
+          <span class="tag">Night</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 — Fireworks abstract -->
+    <div class="project-card">
+      <img class="project-img" src="images/snapsave-app_3757960760065025540.jpg" alt="Light &amp; Chaos">
+      <div class="project-overlay">
+        <div class="project-number">03.</div>
+        <div class="project-title">Light &amp; Chaos</div>
+        <div class="project-tags">
+          <span class="tag pink">Abstract</span>
+          <span class="tag">Night</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 — Dog walker on hill -->
+    <div class="project-card">
+      <img class="project-img" src="images/snapsave-app_3762313966949781874.jpg" alt="Morning Walk">
+      <div class="project-overlay">
+        <div class="project-number">04.</div>
+        <div class="project-title">Morning Walk</div>
+        <div class="project-tags">
+          <span class="tag">Landscape</span>
           <span class="tag">Documentary</span>
         </div>
       </div>
     </div>
 
-    <!-- Card 3 -->
+    <!-- Card 5 — Birds / blue sky -->
     <div class="project-card">
-      <div class="project-placeholder">Add photo here</div>
-      <div class="project-overlay">
-        <div class="project-number">03.</div>
-        <div class="project-title">Black &amp; White</div>
-        <div class="project-tags">
-          <span class="tag pink">Analogue</span>
-          <span class="tag">Film</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 4 -->
-    <div class="project-card">
-      <div class="project-placeholder">Add photo here</div>
-      <div class="project-overlay">
-        <div class="project-number">04.</div>
-        <div class="project-title">Motion &amp; Still</div>
-        <div class="project-tags">
-          <span class="tag">Campaign</span>
-          <span class="tag">Commercial</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card 5 -->
-    <div class="project-card">
-      <div class="project-placeholder">Add photo here</div>
+      <img class="project-img" src="images/snapsave-app_3762313966228372972.jpg" alt="In Flight">
       <div class="project-overlay">
         <div class="project-number">05.</div>
-        <div class="project-title">Event Coverage</div>
+        <div class="project-title">In Flight</div>
         <div class="project-tags">
-          <span class="tag pink">Events</span>
-          <span class="tag">Culture</span>
+          <span class="tag pink">Nature</span>
+          <span class="tag">Sky</span>
         </div>
       </div>
     </div>
 
-    <!-- Card 6 -->
+    <!-- Card 6 — Cyclists, autumn avenue -->
     <div class="project-card">
-      <div class="project-placeholder">Add photo here</div>
+      <img class="project-img" src="images/snapsave-app_3760269521018482314.jpg" alt="Autumn Avenue">
       <div class="project-overlay">
         <div class="project-number">06.</div>
-        <div class="project-title">Fashion</div>
+        <div class="project-title">Autumn Avenue</div>
         <div class="project-tags">
-          <span class="tag">Fashion</span>
-          <span class="tag pink">Lookbook</span>
+          <span class="tag">Street</span>
+          <span class="tag pink">Seasonal</span>
         </div>
       </div>
     </div>
@@ -701,7 +149,7 @@
         Whether it's street portraiture, editorial campaigns, or cultural documentation — I shoot to make people feel something.
       </p>
       <a href="https://www.instagram.com/djcb_shoots/" target="_blank" rel="noopener">@djcb_shoots ↗</a>
-      <a href="mailto:darwin@email.com">darwin@email.com</a>
+      <a href="/cdn-cgi/l/email-protection#63070211140a0d23060e020a0f4d000c0e"><span class="__cf_email__" data-cfemail="72161300051b1c32171f131b1e5c111d1f">[email&nbsp;protected]</span></a>
     </div>
 
     <!-- Col 2: Achievements -->
@@ -751,12 +199,12 @@
     <li><a href="#projects">Work</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="https://www.instagram.com/djcb_shoots/" target="_blank" rel="noopener">Instagram</a></li>
-    <li><a href="mailto:darwin@email.com">Email</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#9efaffece9f7f0defbf3fff7f2b0fdf1f3">Email</a></li>
   </ul>
   <span class="footer-copy">© 2026 Darwin Connolly-Bautista</span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Intersection observer for project cards entrance animation
   const cards = document.querySelectorAll('.project-card');
   const observer = new IntersectionObserver((entries) => {
@@ -800,16 +248,4 @@
 
   // Enlarge dot on links/cards
   document.querySelectorAll('a, .project-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      dot.style.transform = 'translate(-50%, -50%) scale(3)';
-      dot.style.opacity = '0.5';
-    });
-    el.addEventListener('mouseleave', () => {
-      dot.style.transform = 'translate(-50%, -50%) scale(1)';
-      dot.style.opacity = '1';
-    });
-  });
-</script>
-
-</body>
-</html>
+    el.addEven</script></body>
